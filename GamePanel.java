@@ -3,10 +3,11 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class GamePanel extends JPanel {
+  // set some basic variables
   private int width = 30, x = (Main.FRAME_WIDTH - width) / 2, y = Main.FRAME_HEIGHT - 2 * width;
-  private double velocity = 0.0, acceleration = 0.0; //add this next
+  private double velocity = 0.0, acceleration = 0.0;
 
-  @Override //this is what gets drawn every update
+  @Override // this is what gets drawn every update
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
     g2d.clearRect(0, 0, Main.FRAME_WIDTH, Main.FRAME_HEIGHT);
@@ -18,6 +19,7 @@ public class GamePanel extends JPanel {
     setFocusable(true);
     GameListener listener = new GameListener();
     addKeyListener(listener);
+    // this happens every 100 milliseconds
     Timer timer = new Timer(100, new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         acceleration -= 1.0;
