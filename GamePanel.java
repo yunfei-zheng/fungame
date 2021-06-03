@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.*;
 
 public class GamePanel extends JPanel {
@@ -18,10 +19,25 @@ public class GamePanel extends JPanel {
 		g2d.setColor(Color.RED);
     // at top: y = 0, bottom: y = frameheight - 2 * width
     g2d.fillRect(x, y, width, width);
-    if (obstacles.size() < 5 && Math.random() < 0.2) {
-      obstacles.add(new Obstacle());
+
+    ArrayList<Obstacle> toRemove = new ArrayList<Obstacle>();
+    for (Obstacle o: obstacles) {
+      if (o.offscreen()) {
+        System.out.println("detec offscre");
+        toRemove.add(o);
+      }
     }
+    obstacles.removeAll(toRemove);
+    /*
+    if (obstacles.size() < 1) {
+      Random r = new Random();
+      if (r.nextInt(100) < 5) {
+        System.out.println("yes");
+        obstacles.add(new Obstacle());
+      }
+    }*/
     for (Obstacle o : obstacles) {
+      System.out.println("Hlp");
       o.paintComponent(g);
     }
 	}
@@ -31,6 +47,9 @@ public class GamePanel extends JPanel {
     GameListener listener = new GameListener();
     addKeyListener(listener);
     obstacles = new ArrayList<Obstacle>();
+    for (int i = 0; i < 1; i++) {
+      obstacles.add(new Obstacle());
+    }
     // this happens every 15 milliseconds
     Timer timer = new Timer(15, new ActionListener() {
       public void actionPerformed(ActionEvent e) {
